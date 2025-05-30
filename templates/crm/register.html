@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container bg-light shadow-md p-5 form-layout">
+        <h3> Crie sua conta</h3>
+        <h5>Comece a gerenciar seus clientes hoje mesmo!</h5>
+
+        <hr>
+        <br>
+
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+
+             {{form.username|as_crispy_field}}
+
+            <br>
+
+             {{form.password1|as_crispy_field}}
+
+             <br>
+
+             {{form.password2|as_crispy_field}}
+
+            <br>
+
+            <button type="submit" class="btn btn-primary w-100 btn-block p-2">
+                Criar conta &nbsp;
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </button>
+        </form>
+
+        <br>
+
+        <div class="text-center">
+            <p>Já tem uma conta?</p>
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+{% endblock content %}

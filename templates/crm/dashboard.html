@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h3>Bem-vindo(a), {{user}}! 👋</h1>
+
+    <hr>
+
+    <a href="{% url 'create-record' %}" class="btn btn-outline-primary btn-sm">
+        Criar novo registro &nbsp; <i class="fa fa-plus-circle" aria-hidden="true"></i>
+    </a>
+
+    <hr>
+
+    <table class="table table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Endereço</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Estado</th>
+                <th scope="col">País</th>
+                <th scope="col">Adicionado em</th>
+                <th scope="col">Ver</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if records %}
+                {% for record in records %}
+                    <tr>
+                        <td>{{record.id}}</td>
+                        <td>{{record.first_name}} {{record.last_name}}</td>
+                        <td>{{record.email}}</td>
+                        <td>{{record.phone}}</td>
+                        <td>{{record.address}}</td>
+                        <td>{{record.city}}</td>
+                        <td>{{record.state}}</td>
+                        <td>{{record.country}}</td>
+                        <td>{{record.created_at}}</td>
+                        <td>
+                            <a href="{% url 'record' record.id %}" class="btn btn-success btn-sm">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+
+{% endblock content %}

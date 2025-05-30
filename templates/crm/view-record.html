@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="card">
+
+        <div class="card-body">
+            <h3 class="card-title">
+                <b>Detalhes do Registro:</b>
+            </h3>
+            &nbsp;
+            <h4>
+                <i class="fa fa-circle-user" aria-hidden="true"></i>
+                &nbsp;
+                {{record.first_name}}  {{record.last_name}}
+            </h4>
+            <hr>
+            <p>
+                <strong>ID:</strong> {{record.id}}
+            </p>
+            <p>
+                <strong>Email:</strong> {{record.email}}  
+            </p>
+            <p>
+                <strong>Telefone:</strong> {{record.phone}}
+            </p>
+            <p>
+                <strong>Endereço:</strong> {{record.address}}
+            </p>
+            <p>
+                <strong>Cidade:</strong> {{record.city}}
+            </p>
+            <p>
+                <strong>Estado:</strong> {{record.state}}
+            </p>
+            <p>
+                <strong>País:</strong> {{record.country}}
+            </p>
+            <p>
+                <strong>Data de Adição:</strong> {{record.created_at}}
+            </p>
+        </div>
+    </div>
+
+    <br>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+        Voltar &nbsp; <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    </a>
+    <a href="{% url 'update-record' record.id %}" class="btn btn-info">
+        Atualizar Registro &nbsp; <i class="fa fa-pencil" aria-hidden="true"></i>
+    </a>
+    <a href="{% url 'delete-record' record.id %}" class="btn btn-danger">
+        Excluir Registro &nbsp; <i class="fa fa-trash" aria-hidden="true"></i>
+    </a>
+    
+{% endblock content %}
