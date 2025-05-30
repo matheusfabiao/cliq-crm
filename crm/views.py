@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import auth
 from django.shortcuts import redirect, render
+from rest_framework import viewsets
 
 from .forms import (
     CreateRecordForm,
@@ -11,6 +12,7 @@ from .forms import (
     UpdateRecordForm,
 )
 from .models import Record
+from .serializers import RecordSerializer
 
 
 # Home page
@@ -106,3 +108,8 @@ def delete_record(request, pk):
     record.delete()
     messages.success(request, 'Registro deletado com sucesso!')
     return redirect('dashboard')
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = Record.objects.all()
+    serializer_class = RecordSerializer
