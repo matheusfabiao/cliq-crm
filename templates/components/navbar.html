@@ -1,57 +1,59 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary justify-content-center">
-  <a class="navbar-brand main-heading" href="{% url 'home' %}"> 
-    &nbsp; Cliq CRM
-  </a>
-
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
-    <ul class="navbar-nav mr-auto">
-      &nbsp; &nbsp; &nbsp; 
-
-      {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard &nbsp; <i class="fa fa-home" aria-hidden="true"></i> </a>
-        </li>
-
-        &nbsp; &nbsp; &nbsp;
-
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'ai_chat' %}">
-            Assistente &nbsp; <i class="fa fa-robot" aria-hidden="true"></i>
-          </a>
-        </li>
-
-        &nbsp; &nbsp; &nbsp;
-
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'logout' %}">
-            Sair &nbsp; <i class="fa fa-sign-out" aria-hidden="true"></i>
-          </a>
-        </li>
-      </ul>
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'register' %}">
-            Cadastrar
-          </a>
-        </li>
-
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary justify-content-between sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand main-heading" href="{% url 'home' %}"> 
+      &nbsp; <i class="fa fa-users" aria-hidden="true"></i> &nbsp; Cliq CRM
+    </a>
+  
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse text-center" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto">
         &nbsp; &nbsp; &nbsp; 
-
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
-      {% endif %}
+  
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard &nbsp; <i class="fa fa-home" aria-hidden="true"></i> </a>
+          </li>
+  
+          &nbsp; &nbsp; &nbsp;
+  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ai_chat' %}">
+              Assistente &nbsp; <i class="fa fa-robot" aria-hidden="true"></i>
+            </a>
+          </li>
+  
+          &nbsp; &nbsp; &nbsp;
+  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">
+              Sair &nbsp; <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">
+              Cadastrar
+            </a>
+          </li>
+  
+          &nbsp; &nbsp; &nbsp; 
+  
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
+    </div>
   </div>
 </nav>
