@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -58,7 +59,12 @@ def user_logout(request):
 # Dashboard
 @login_required(login_url='login')
 def dashboard(request):
-    records = Record.objects.all()
+    record_list = Record.objects.all().order_by('-created_at')
+    paginator = Paginator(record_list, 10)
+    
+    page_number = request.GET.get('page')
+    records = paginator.get_page(page_number)
+    
     context = {'records': records}
     return render(request, 'crm/dashboard.html', context)
 
