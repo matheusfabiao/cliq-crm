@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crm',
     'crispy_forms',
     'rest_framework',
+    'ai_agent',
 ]
 
 MIDDLEWARE = [
