@@ -1,9 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from .assistant import get_agent_executor
-from django.http import JsonResponse, HttpResponse
-from .models import Chat
+
 from utils.markdown_to_html import markdown_to_html
+
+from .assistant import get_agent_executor
+from .models import Chat
 
 
 @login_required(login_url='login')
@@ -25,7 +27,7 @@ def ai_chat(request) -> HttpResponse:
 def response(request):
     """Lida com uma requisição POST da interface de bate-papo,
     salvar a mensagem e a resposta no banco de dados e retorna um objeto JSON com a resposta.
-    
+
     Se a requisição não for uma requisição POST,
     retornar uma resposta JSON com um status 400 e uma mensagem de erro.
 
@@ -35,17 +37,13 @@ def response(request):
 
     if request.method == 'POST':
         message = request.POST.get('message', '')
-        
+
         agent = get_agent_executor()
-        
-        response_raw: str = agent.invoke(
-            {
-                'input': message
-            }
-        ).get('output', '')
+
+        response_raw: str = agent.invoke({'input': message}).get('output', '')
 
         response = markdown_to_html(response_raw.strip())
-        
+
         new_chat = Chat(
             message=message,
             response=response,

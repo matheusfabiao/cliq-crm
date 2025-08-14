@@ -1,6 +1,8 @@
-from langchain.tools import Tool
-from crm.models import Record
 from django.db.models import Q
+from langchain.tools import Tool
+
+from crm.models import Record
+
 from .models import Chat
 
 
@@ -25,7 +27,7 @@ def get_current_date(*args, **kwargs) -> str:
     from datetime import datetime
 
     now = datetime.now()
-    return now.strftime("%d/%m/%Y")
+    return now.strftime('%d/%m/%Y')
 
 
 def get_current_date_time(*args, **kwargs) -> str:
@@ -37,7 +39,7 @@ def get_current_date_time(*args, **kwargs) -> str:
     from datetime import datetime
 
     now = datetime.now()
-    return now.strftime("%d/%m/%Y %H:%M")
+    return now.strftime('%d/%m/%Y %H:%M')
 
 
 def get_record_by_name(name: str) -> str:
@@ -55,16 +57,23 @@ def get_record_by_name(name: str) -> str:
 
     if len(name_split) == 1:
         # Busca se a parte está no first_name ou no last_name
-        query = Q(first_name__icontains=name_split[0]) | Q(last_name__icontains=name_split[0])
+        query = Q(first_name__icontains=name_split[0]) | Q(
+            last_name__icontains=name_split[0]
+        )
     else:
         # Busca se ambas as partes aparecem nos campos corretos
-        query = Q(first_name__icontains=name_split[0], last_name__icontains=name_split[-1]) | \
-                Q(first_name__icontains=name_split[-1], last_name__icontains=name_split[0])
+        query = Q(
+            first_name__icontains=name_split[0],
+            last_name__icontains=name_split[-1],
+        ) | Q(
+            first_name__icontains=name_split[-1],
+            last_name__icontains=name_split[0],
+        )
 
     record = Record.objects.filter(query).first()
-    
+
     if record:
-        return f'''
+        return f"""
             Nome: {record.first_name} {record.last_name}
             Email: {record.email}
             Telefone: {record.phone}
@@ -72,7 +81,7 @@ def get_record_by_name(name: str) -> str:
             Cidade: {record.city}
             Estado: {record.state}
             País: {record.country}
-        '''
+        """
     else:
         return 'Nenhum registro encontrado.'
 
@@ -84,31 +93,31 @@ def get_past_context(*args, **kwargs):
     Returns:
         str: Contexto de mensagens anteriores ou mensagem de nada encontrado
     """
-    
+
     chat: list = Chat.objects.all().order_by('created_at')[:10]
-    
+
     if not chat:
         return 'Nenhuma mensagem anterior encontrada.'
-    
-    context = '''
+
+    context = """
     Contexto Anterior:
-    '''
-    
+    """
+
     for message in chat:
-        context += f'''
+        context += f"""
         Usuário: {message.message}
         Agente: {message.response}
-        '''
-        
+        """
+
     return context
 
 
 def list_recent_records(limit: int = 5):
     """Retorna a lista dos registros mais recentes.
-    
+
     Args:
         limit (int, optional): Número de registros a serem retornados. Padrão é 5.
-    
+
     Returns:
         str: Lista de registros no formato:
             Nome: <nome>
@@ -128,7 +137,7 @@ def list_recent_records(limit: int = 5):
 
     if limit == 1:
         last_record = Record.objects.order_by('-created_at').first()
-        return f'''
+        return f"""
             Nome: {last_record.first_name} {last_record.last_name}
             Email: {last_record.email}
             Telefone: {last_record.phone}
@@ -136,15 +145,15 @@ def list_recent_records(limit: int = 5):
             Cidade: {last_record.city}
             Estado: {last_record.state}
             País: {last_record.country}
-        '''
+        """
     else:
         records = Record.objects.order_by('-created_at')[:limit]
-        
+
         if not records:
             return 'Nenhum registro encontrado.'
-        
+
         return '\n'.join(
-            f'''
+            f"""
             Nome: {record.first_name} {record.last_name}
             Email: {record.email}
             Telefone: {record.phone}
@@ -152,7 +161,7 @@ def list_recent_records(limit: int = 5):
             Cidade: {record.city}
             Estado: {record.state}
             País: {record.country}
-            '''
+            """
             for record in records
         )
 
