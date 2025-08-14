@@ -5,12 +5,8 @@ from django.contrib.auth.models import auth
 from django.shortcuts import redirect, render
 from rest_framework import viewsets
 
-from .forms import (
-    CreateRecordForm,
-    CreateUserForm,
-    LoginForm,
-    UpdateRecordForm,
-)
+from .forms import (CreateRecordForm, CreateUserForm, LoginForm,
+                    UpdateRecordForm)
 from .models import Record
 from .serializers import RecordSerializer
 
