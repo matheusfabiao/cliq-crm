@@ -8,6 +8,8 @@
     <title>ChatGPT Clone</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome/css/all.min.css' %}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/ai_agent.css' %}" />
     <!-- DOMPurify -->
@@ -15,9 +17,66 @@
   </head>
   <body class="bg-blue-50">
     <div class="chat-container">
-      <header class="bg-blue-600 text-white p-4 text-center">
-        <h1 class="text-2xl">Chat AI</h1>
-      </header>
+      <!-- Barra de navegação -->
+      <nav class="bg-[#2C3E50] text-white sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <a href="{% url 'home' %}" class="flex items-center text-lg font-bold">
+              <i class="fa fa-users mr-2"></i>
+              Cliq CRM
+            </a>
+
+            <!-- Botão mobile -->
+            <button 
+              class="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-white" 
+              id="menu-btn"
+            >
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <!-- Links -->
+            <div class="hidden md:flex space-x-8">
+              {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="hover:text-gray-200 flex items-center">
+                  Dashboard <i class="fa fa-home ml-2"></i>
+                </a>
+                <a href="{% url 'ai_chat' %}" class="hover:text-gray-200 flex items-center">
+                  Assistente <i class="fa fa-robot ml-2"></i>
+                </a>
+                <a href="{% url 'logout' %}" class="hover:text-gray-200 flex items-center">
+                  Sair <i class="fa fa-sign-out ml-2"></i>
+                </a>
+              {% else %}
+                <a href="{% url 'register' %}" class="hover:text-gray-200">Cadastrar</a>
+                <a href="{% url 'login' %}" class="hover:text-gray-200">Login</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div class="hidden md:hidden px-4 pb-4 space-y-2" id="mobile-menu">
+          {% if user.is_authenticated %}
+            <a href="{% url 'dashboard' %}" class="block py-2 border-b border-white/20">
+              Dashboard <i class="fa fa-home ml-2"></i>
+            </a>
+            <a href="{% url 'ai_chat' %}" class="block py-2 border-b border-white/20">
+              Assistente <i class="fa fa-robot ml-2"></i>
+            </a>
+            <a href="{% url 'logout' %}" class="block py-2">
+              Sair <i class="fa fa-sign-out ml-2"></i>
+            </a>
+          {% else %}
+            <a href="{% url 'register' %}" class="block py-2 border-b border-white/20">Cadastrar</a>
+            <a href="{% url 'login' %}" class="block py-2">Login</a>
+          {% endif %}
+        </div>
+      </nav>
+
       <main class="flex flex-col flex-grow p-4">
         <div id="chat-history" class="chat-history mb-4">
           <!-- O histórico do chat será inserido dinamicamente aqui -->
@@ -28,16 +87,25 @@
             <input
               id="chat-input"
               type="text"
-              class="flex-grow p-2 border border-blue-300 rounded-l"
+              class="flex-grow p-2 border border-[#14A085] rounded-l"
               placeholder="Digite sua mensagem..."
             />
-            <button type="submit" class="bg-blue-600 text-white p-2 rounded-r">
+            <button type="submit" class="bg-[#14A085] text-white p-2 rounded-r">
               Enviar
             </button>
           </form>
         </div>
       </main>
     </div>
+
+    <script>
+      const btn = document.getElementById('menu-btn');
+      const menu = document.getElementById('mobile-menu');
+
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    </script>
 
     <script src="{% static 'js/main.js' %}"></script>
   </body>
