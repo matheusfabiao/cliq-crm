@@ -12,6 +12,9 @@ def import_records():
     # Caminho para o arquivo de dados
     BASE_DIR = Path(__file__).resolve().parent.parent.parent  # volta até a raiz do projeto
     file_path = BASE_DIR / "crm" / "utils" / "data" / "clientes.xlsx"
+    
+    # Garantir que file_path seja string para métodos de string
+    file_path = str(file_path)
 
     if not os.path.exists(file_path):
         print(f'Arquivo {file_path} não encontrado.')
