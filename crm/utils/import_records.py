@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 import pandas as pd
 from django.apps import apps
@@ -9,7 +10,8 @@ def import_records():
     Record = apps.get_model('crm', 'Record')
 
     # Caminho para o arquivo de dados
-    file_path = r'crm\utils\data\clientes.xlsx'
+    BASE_DIR = Path(__file__).resolve().parent.parent.parent  # volta até a raiz do projeto
+    file_path = BASE_DIR / "crm" / "utils" / "data" / "clientes.xlsx"
 
     if not os.path.exists(file_path):
         print(f'Arquivo {file_path} não encontrado.')
